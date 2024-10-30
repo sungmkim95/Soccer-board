@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Soccer Ver1</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="/css/comm.css">
+    <link rel="stylesheet" type="text/css" href="/css/soccer.css">
+
+</head>
+<body>
+
+
+<!--header 위치-->
+<th:block th:include="~{/comm/header}"></th:block>
+
+
+<div id="main" style="font-size:large; text-align: center; ">
+
+    <div id="menuIns" style="height: 250px; width: 50%; font-size: small; margin-left: auto; margin-right: auto;">
+        <h3>[ 상품 수정 ]</h3>
+        <form name="soccerV1" autocomplete="on" action="/v1/update" method="post">
+            <fieldset>
+                <legend>수정 Form</legend>
+                <label>상품명</label><input type="text" name="name" th:value="${map.get('name')}"></p>
+                <label>종 류 </label><select name="kind">
+                <option value="1.나이키" th:selected="${map.get('kind')} == '1.나이키'">1.나이키</option>
+                <option value="2.아디다스" th:selected="${map.get('kind')} == '2.아디다스'">2.아디다스</option>
+                <option value="3.푸마" th:selected="${map.get('kind')} == '3.푸마'">3.푸마</option>
+            </select>
+                </p>
+                <label>가 격 </label><input type="number" name="price" th:value="${map.get('price')}"></p>
+                <input type="hidden" name="soccer_id" th:value="${map.get('soccer_id')}">
+                <input type="submit" value="상품 수정" style="width: 100px;height: 30px;font-weight: bold; font-size: medium">
+
+            </fieldset>
+        </form>
+    </div>
+
+</div>
+
+
+<!--footer 위치-->
+<th:block th:replace="~{/comm/footer}"></th:block>
+
+
+<script>
+
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="/css/comm.css">
+
+</head>
+<body>
+
+<!--header 위치-->
+<th:block th:include="~{/comm/header}"></th:block>
+
+
+<div id="main" style="font-size:large; alignment: center; padding: 10px 50px ">
+  <p>홈
+  </p>
+  <p>
+  <ul style="list-style-type:square;">
+    <li>개발툴 : Intellij</li>
+    <li>Java 버전 : 21.0.5</li>
+    <li>DB : MaridDB</li>
+    <li>View  : Thymeleaf</li>
+    <li>Mapper : Mybatis</li>
+  </ul>
+  </p>
+
+</div>
+
+
+<!--footer 위치-->
+<th:block th:replace="~{/comm/footer}"></th:block>
+
+</body>
+</html>

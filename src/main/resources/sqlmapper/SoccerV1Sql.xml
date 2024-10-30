@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.soccer_1.dao.SoccerV1Dao">
+
+    <!-- /* 전체리스트 조회*/ -->
+    <select id="doSoccerList" resultType="map">
+        SELECT soccer_id, name, kind, price,
+               DATE_FORMAT(reg_day, '%Y.%m.%d') AS reg_day, DATE_FORMAT(mod_day, '%Y.%m.%d') AS mod_day
+        FROM soccer
+        WHERE 1=1
+        <!-- 등록기간 쿼리 -->
+        <choose>
+            <when test="strStart_date == null">
+                AND reg_day >= date_add(now(), INTERVAL-7 DAY)
+            </when>
+            <otherwise>
+                AND reg_day >= DATE_FORMAT(#{strStart_date}, '%Y%m%d')
+                AND reg_day <![CDATA[ < ]]> DATE_ADD(DATE_FORMAT(#{strEnd_date}, '%Y%m%d'), INTERVAL +2 DAY)
+            </otherwise>
+        </choose>
+
+        <if test="strName != null and strName != ''">
+            AND name like CONCAT(#{strName},'%')
+        </if>
+        <!-- 종류 쿼리 -->
+        <if test="strKind != null and strKind != 'ALL' ">
+            ANd kind = #{strKind}
+        </if>
+    </select>
+
+    <!-- 상품 등록하기 -->
+    <insert id="doInsert">
+        Insert into soccer(name, kind, price)
+        Values (#{name}, #{kind}, CAST(#{price} as INTEGER)) <!-- 정수값으로 변환-->
+    </insert>
+
+    <!-- row 조회  -->
+    <select id="doListOne" resultType="map">
+        SELECT soccer_id, name, kind, price,
+               DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day, DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
+        FROM soccer
+        WHERE soccer_id = CAST(#{strSoccer_id} as INTEGER)
+    </select>
+
+
+    <!-- 상품 수정하기 -->
+    <insert id="doUpdate">
+        UPDATE soccer
+        SET name=#{strName}, kind=#{strKind}, price=CAST(#{strPrice} as INTEGER)
+        WHERE soccer_id = CAST(#{strSoccer_id} as INTEGER)
+    </insert>
+
+
+    <!-- 상품 삭제 -->
+    <insert id="doDelete">
+        Delete from soccer
+        WHERE soccer_id = CAST(#{strSoccer_id} as INTEGER)
+    </insert>
+
+
+
+</mapper>
